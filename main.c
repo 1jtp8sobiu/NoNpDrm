@@ -327,11 +327,12 @@ static int ksceNpDrmGetRifInfoPatched(SceNpDrmLicense *license_buf, int license_
 
   // Trial version -> Full version
   if (sku_flag) {
-    if (__builtin_bswap32(license_buf->sku_flag) == 1 ||
-        __builtin_bswap32(license_buf->sku_flag) == 3)
+    if (__builtin_bswap32(license_buf->sku_flag) == 1) 
+      *sku_flag = 1;
+    else if (__builtin_bswap32(license_buf->sku_flag) == 3) 
       *sku_flag = 3;
-    else
-      *sku_flag = 0;
+    else if (__builtin_bswap32(license_buf->sku_flag) == 0) // Always set to 3
+      *sku_flag = 3;
   }
 
   // Bypass expiration time for PS Plus games
@@ -380,11 +381,12 @@ static int ksceNpDrmGetRifVitaKeyPatched(SceNpDrmLicense *license_buf, uint8_t *
 
   // Trial version -> Full version
   if (sku_flag) {
-    if (__builtin_bswap32(license_buf->sku_flag) == 1 ||
-        __builtin_bswap32(license_buf->sku_flag) == 3)
+    if (__builtin_bswap32(license_buf->sku_flag) == 1) 
+      *sku_flag = 1;
+    else if (__builtin_bswap32(license_buf->sku_flag) == 3) 
       *sku_flag = 3;
-    else
-      *sku_flag = 0;
+    else if (__builtin_bswap32(license_buf->sku_flag) == 0) // Always set to 3
+      *sku_flag = 3;
   }
 
   // Bypass expiration time for PS Plus games
